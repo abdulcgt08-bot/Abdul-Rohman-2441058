@@ -1,0 +1,476 @@
+KATA PENGANTAR
+Puji syukur ke hadirat Allah SWT, Tuhan Yang Maha Esa, karena atas rahmat dan karunia-Nya,
+tim penyusun dapat menyelesaikan laporan perancangan sistem yang berjudul "Pengembangan
+Sistem Informasi Berbasis Web (LUNASIN)" dengan baik dan tepat waktu.
+Laporan ini disusun sebagai bentuk pertanggungjawaban tahapan awal proyek sekaligus untuk
+memenuhi persyaratan Ujian Tengah Semester (UTS) pada mata kuliah Software Engineering
+di Sekolah Tinggi Manajemen Informatika & Komputer (STMIK) "AMIKBANDUNG".
+Dalam proses penyusunan laporan dan perancangan sistem ini, tim penyusun menyadari bahwa
+kelancaran proyek tidak lepas dari bimbingan, dukungan, serta kerja sama dari berbagai pihak.
+Oleh karena itu, pada kesempatan ini tim penyusun ingin menyampaikan ucapan terima kasih
+yang sebesar-besarnya kepada:
+1. Bapak Rachmat Jaenal Abidin, M.T, selaku Dosen Pengampu mata kuliah Software
+Engineering yang telah memberikan arahan, ilmu, serta panduan yang sangat berharga
+selama proses perkuliahan dan pengembangan sistem ini.
+2. Seluruh rekan tim pengembang (Erick, Akmal, Abdul, dan Azzrifa) yang telah
+bersinergi dan mencurahkan waktu, pikiran, serta tenaga dari tahap riset awal,
+pembuatan pemodelan UML, hingga perancangan antarmuka (UI/UX).
+3. Pihak pengurus keuangan (Bendahara) dan anggota organisasi yang telah bersedia
+meluangkan waktunya menjadi narasumber dan koresponden dalam tahap elisitasi
+kebutuhan sistem.
+Tim penyusun menyadari sepenuhnya bahwa laporan dan rancangan purwarupa (prototype)
+sistem LUNASIN ini masih jauh dari kata sempurna, mengingat siklus pengembangan
+perangkat lunak yang masih akan berlanjut ke tahap implementasi kode program (coding) dan
+pengujian. Oleh karena itu, segala bentuk kritik dan saran yang konstruktif sangat kami
+harapkan guna penyempurnaan sistem ini ke depannya.
+Akhir kata, semoga laporan perancangan sistem LUNASIN ini dapat memberikan manfaat,
+wawasan, serta menjadi landasan yang solid untuk pengembangan tahap selanjutnya.
+ii
+DAFTAR ISI
+KATA PENGANTAR .................................................................................................................i
+DAFTAR ISI..............................................................................................................................ii
+BAB I PENDAHULUAN..........................................................................................................1
+1.1 Latar Belakang...........................................................................................................1
+1.2 Tujuan Sistem ............................................................................................................1
+1.3 Metode Yang Digunakan............................................................................................2
+BAB II HASIL RISET...............................................................................................................3
+2.1 Latar Belakang dan Tujuan Riset...............................................................................3
+2.2 Metodologi dan Demografi Responden.....................................................................3
+2.3 Analisis Kebutuhan Pengguna (Perspektif Anggota Organisasi)...............................3
+2.4 Analisis Kebutuhan Sistem (Perspektif Bendahara Organisasi)................................6
+BAB III WORK BREAKDOWN STRUCTURE (WBS) .........................................................9
+BAB IV PERANCANGAN PEMODELAN SISTEM............................................................10
+4.1 Use Case Diagram....................................................................................................10
+4.2 Activity Diagram .....................................................................................................10
+4.2.1 Activity Diagram - Melakukan Login..................................................................10
+4.2.2 Activity Diagram - Melihat Dashboard ...............................................................11
+4.2.3 Activity Diagram - Mengunggah Bukti Pembayaran ..........................................12
+4.2.4 Activity Diagram - Melihat Laporan Transparansi..............................................12
+4.2.5 Activity Diagram - Mengelola Data Anggota......................................................13
+4.2.6 Activity Diagram - Memvalidasi Pembayaran ....................................................13
+4.2.7 Activity Diagram - Mengelola Transaksi Manual ...............................................14
+4.2.8 Activity Diagram - Mencetak/Mengunduh Laporan............................................15
+4.3 Sequence Diagram ...................................................................................................15
+4.3.1 Sequence Diagram - Melakukan Login ...............................................................15
+4.3.2 Sequence Diagram - Melihat Dashboard .............................................................16
+4.3.3 Sequence Diagram - Mengunggah Bukti Pembayaran ........................................16
+4.3.4 Sequence Diagram - Melihat Laporan Transparansi............................................17
+4.3.5 Sequence Diagram - Mengelola Data Anggota....................................................17
+4.3.6 Sequence Diagram - Memvalidasi Pembayaran ..................................................17
+4.3.7 Sequence Diagram - Mengelola Transaksi Manual .............................................18
+4.3.8 Sequence Diagram - Mencetak/Mengunduh Laporan .........................................18
+iii
+BAB V IMPLEMENTASI ANTARMUKA (UI/UX)..............................................................20
+5.1 Pendekatan Desain dan Teknologi ...........................................................................20
+5.2 Implementasi Antarmuka Umum.............................................................................20
+5.3 Implementasi Antarmuka Anggota (Member POV) ................................................21
+5.4 Implementasi Antarmuka Bendahara (Admin POV)...............................................23
+BAB VI KESIMPULAN .........................................................................................................28
+LAMPIRAN.............................................................................................................................29
+1
+BAB I
+PENDAHULUAN
+1.1 Latar Belakang
+Pengelolaan kas organisasi merupakan salah satu aspek penting dalam menunjang
+keberlangsungan aktivitas organisasi, karena berkaitan langsung dengan transparansi,
+akuntabilitas, serta kepercayaan antar anggota. Namun, berdasarkan hasil riset yang telah
+dilakukan melalui wawancara dengan bendahara dan penyebaran kuesioner kepada anggota
+organisasi, ditemukan bahwa sistem pengelolaan kas yang masih dilakukan secara
+konvensional menimbulkan berbagai permasalahan. Dari sisi bendahara, proses pencatatan dan
+rekapitulasi keuangan yang dilakukan secara manual membutuhkan waktu yang lama serta
+rentan terhadap kesalahan manusia (human error). Selain itu, proses verifikasi pembayaran juga
+menjadi tidak efisien karena bendahara harus mencocokkan bukti transfer secara manual
+dengan data transaksi. Arsip bukti pembayaran yang tidak terorganisir dengan baik juga
+menyulitkan dalam proses pencarian data.
+Sementara itu, dari sisi anggota organisasi, hasil kuesioner menunjukkan bahwa sebagian besar
+pengguna mengalami kendala dalam melakukan pembayaran, seperti lupa status pembayaran,
+kesulitan mengetahui riwayat transaksi, serta kurangnya transparansi dalam informasi
+keuangan organisasi. Hal ini menunjukkan adanya kebutuhan akan sistem yang dapat
+memberikan akses informasi secara real-time dan terintegrasi. Berdasarkan permasalahan
+tersebut, diperlukan suatu sistem informasi yang mampu mengintegrasikan proses pencatatan,
+verifikasi, dan pelaporan keuangan dalam satu platform. Oleh karena itu, dikembangkan sistem
+LUNASIN (Digitalisasi Manajemen Kas Organisasi) sebagai solusi berbasis web yang
+bertujuan untuk meningkatkan efisiensi, akurasi, serta transparansi dalam pengelolaan kas
+organisasi.
+1.2 Tujuan Sistem
+Berdasarkan rumusan latar belakang permasalahan yang telah diuraikan, adapun tujuan dari
+pengembangan sistem informasi LUNASIN (Digitalisasi Manajemen Kas Organisasi) adalah
+sebagai berikut:
+1. Mendigitalisasi Proses Administrasi: Menggantikan sistem pencatatan dan rekapitulasi
+kas yang masih konvensional/manual menjadi sistem berbasis digital untuk menekan
+risiko human error dan meningkatkan efisiensi waktu kerja bendahara.
+2. Meningkatkan Transparansi Keuangan: Menyediakan fitur dasbor riwayat pembayaran
+dan laporan transparansi sirkulasi kas yang dapat diakses secara real-time oleh seluruh
+anggota organisasi, guna membangun akuntabilitas dan kepercayaan.
+3. Mempermudah Alur Verifikasi: Membangun ekosistem pembayaran yang terintegrasi
+di mana anggota dapat mengunggah bukti transfer secara mandiri, dan bendahara dapat
+memvalidasi serta memperbarui status tagihan dalam satu platform (satu pintu).
+4. Memberikan Aksesibilitas Optimal: Mengembangkan antarmuka aplikasi berbasis web
+dengan pendekatan mobile-first dan Role-Based Access Control (RBAC), sehingga
+sistem ringan, intuitif, dan mudah diakses oleh pengguna melalui perangkat ponsel
+pintar (smartphone) kapan saja dan di mana saja.
+2
+1.3 Metode Yang Digunakan
+Metode pengembangan sistem yang digunakan dalam pembuatan aplikasi LUNASIN
+adalah Software Development Life Cycle (SDLC) dengan model Waterfall. Metode ini
+dipilih karena kebutuhan sistem telah terdefinisi dengan jelas berdasarkan hasil riset yang
+dilakukan pada tahap awal. Model Waterfall memiliki pendekatan yang sistematis dan
+berurutan, di mana setiap tahapan harus diselesaikan terlebih dahulu sebelum melanjutkan ke
+tahap berikutnya. Pendekatan ini memastikan bahwa proses pengembangan berjalan secara
+terstruktur dan terdokumentasi dengan baik. Adapun tahapan dalam metode Waterfall meliputi
+analisis kebutuhan, perancangan sistem, implementasi, pengujian, serta pemeliharaan. Dengan
+menggunakan metode ini, sistem yang dikembangkan diharapkan memiliki kualitas yang baik
+serta sesuai dengan kebutuhan pengguna yang telah diidentifikasi sebelumnya.
+3
+BAB II
+HASIL RISET
+2.1 Latar Belakang dan Tujuan Riset
+Dalam pengembangan perangkat lunak, proses elisitasi (penggalian) kebutuhan merupakan
+tahap krusial untuk memastikan sistem yang dibangun tepat sasaran dan memberikan solusi
+nyata. Riset ini dilakukan dengan tujuan utama untuk:
+• Menghindari asumsi sepihak dari tim pengembang dengan cara menggali langsung pain
+points (titik masalah) yang dialami pengguna saat ini.
+• Memetakan Kebutuhan Fungsional (Functional Requirements) dan Kebutuhan NonFungsional (Non-Functional Requirements) berdasarkan prioritas pengguna.
+• Menyelaraskan alur kerja (business logic) antara sisi administrator (Bendahara) dan sisi
+pengguna akhir (Anggota Organisasi).
+2.2 Metodologi dan Demografi Responden
+Pengumpulan data dalam riset ini menggunakan pendekatan metode campuran (mixedmethod), yaitu penyebaran kuesioner daring untuk sisi anggota (kuantitatif) dan wawancara
+mendalam untuk sisi bendahara (kualitatif).
+Untuk kuesioner anggota, tim pengembang menetapkan target awal sebanyak 30 hingga 50
+responden agar data yang diperoleh memenuhi kaidah distribusi normal secara statistik.
+Alhamdulillah, antusiasme di lapangan sangat baik sehingga riset ini berhasil menjaring 55
+responden dari berbagai latar belakang organisasi (seperti HIMSI, BEM, UKM, Karang
+Taruna, dll). Hal ini memberikan tingkat kepercayaan dan validitas data yang sangat kuat untuk
+dijadikan landasan perancangan sistem.
+2.3 Analisis Kebutuhan Pengguna (Perspektif Anggota Organisasi)
+Berdasarkan hasil kuesioner dari 55 responden tersebut, berikut adalah analisis kebutuhan dari
+sisi pengguna akhir (end-user):
+• Frekuensi dan Kendala Pembayaran Mayoritas responden (43,6%) menyatakan
+"Kadang-kadang" mengalami kendala seperti lupa atau sulit mencari waktu untuk
+membayar kas.
+4
+Gambar 1. Frekuensi Kendala Pembayaran Anggota
+Kendala operasional tertinggi yang dialami anggota adalah lupa terkait rincian bulan
+apa saja yang sudah lunas dan yang masih menunggak (67,3%). Keluhan terbesar
+kedua disusul oleh kesulitan mencari waktu untuk bertemu bendahara secara langsung
+(27,3%), dan kurangnya transparansi sirkulasi saldo kas organisasi (25,5%).
+Gambar 2. Rincian Kendala Utama Anggota
+• Metode Pembayaran yang Digunakan Terdapat pembagian preferensi yang
+berimbang mengenai metode pembayaran saat ini. Sebanyak 56,4% responden lebih
+sering menggunakan metode transfer online (Bank/E-Wallet), sedangkan 43,6%
+sisanya masih rutin menyerahkan uang tunai. Hal ini mengindikasikan bahwa
+antarmuka LUNASIN harus dirancang untuk mengakomodasi pencatatan dari kedua
+alur pembayaran tersebut secara fleksibel.
+5
+Gambar 3. Metode Pembayaran yang Sering Digunakan
+• Prioritas Fungsionalitas Sistem (Functional Requirements) Dari segi harapan
+terhadap fitur aplikasi, terdapat dua fitur utama yang dinilai paling krusial dengan
+tingkat urgensi yang sama (72,7%), yaitu:
+1. Dashboard Riwayat Pembayaran Pribadi: Untuk melihat rincian tagihan
+secara mandiri.
+2. Laporan Transparansi Kas Organisasi: Untuk melihat total sirkulasi
+pemasukan dan pengeluaran. Tingkat urgensi selanjutnya adalah fitur
+notifikasi/pengingat tunggakan otomatis (60%), dan fungsionalitas untuk
+mengunggah foto bukti transfer secara mandiri (43,6%).
+Gambar 4. Prioritas Kebutuhan Fitur dari Sisi Anggota
+6
+• Kebutuhan Perangkat dan Antarmuka (Non-Functional Requirements) Sebanyak
+92,7% responden menyatakan akan mengakses aplikasi web LUNASIN menggunakan
+Smartphone (HP) dibandingkan Laptop/PC (7,3%). Fakta dominan ini mewajibkan tim
+pengembang (khususnya UI/UX Designer dan Front-End Developer) untuk
+menerapkan pendekatan desain Mobile-First. Antarmuka sistem dipastikan harus
+responsif, ringan, dan optimal saat diakses melalui peramban pada perangkat seluler.
+Gambar 5. Preferensi Perangkat Akses Pengguna
+2.4 Analisis Kebutuhan Sistem (Perspektif Bendahara Organisasi)
+Berdasarkan wawancara mendalam dengan pengurus keuangan dari 4 organisasi berbeda
+(HIMSI, IPM Cabang Daerah, IPM Cabang Kota, dan Dewadaru), diperoleh wawasan terkait
+alur bisnis saat ini, titik masalah (pain points), dan spesifikasi kebutuhan fungsional dari sisi
+administrator:
+a) Evaluasi Proses Bisnis Saat Ini (As-Is System)
+a. Metode Pencatatan: Seluruh organisasi saat ini masih sangat bergantung pada
+metode pencatatan ganda (hybrid), yaitu pencatatan fisik (buku kas manual)
+yang disandingkan dengan perangkat lunak spreadsheet seperti Microsoft Excel
+atau Google Sheets.
+b. Validasi Pembayaran: Proses validasi dilakukan secara manual. Bendahara
+harus mencocokkan foto bukti transfer yang dikirimkan anggota (biasanya via
+chat) dengan riwayat mutasi masuk (e-statement) di rekening bank.
+c. Pelaporan Transparansi: Laporan keuangan umumnya disebarkan secara
+berkala (bulanan atau triwulanan) melalui grup komunikasi atau email resmi
+dalam bentuk format Excel, PDF, maupun sekadar tangkapan layar (screenshot).
+b) Kendala Operasional (Pain Points)
+a. Selisih Kas (Discrepancy): Hampir seluruh bendahara pernah mengalami
+selisih antara pencatatan dengan saldo nyata. Faktor utamanya adalah human
+error (kesalahan input), transaksi yang terlewat dicatat, serta pemotongan biaya
+admin antar-bank yang tidak terdata di pembukuan.
+7
+b. Kelelahan Administratif (Penagihan): Proses menagih iuran kas sangat
+menyita waktu dan tenaga karena bendahara harus memberikan pengingat di
+grup besar, melacak siapa saja yang menunggak, hingga melakukan pendekatan
+personal (japri) satu per satu kepada anggota.
+c. Kekacauan Data: Seringkali anggota sudah melakukan transfer uang namun
+menunda/lupa mengirimkan bukti bayarnya, sehingga validasi transaksi
+menjadi tertunda dan data pembukuan menjadi berantakan.
+c) Prioritas Kebutuhan Fungsional Administrator (Functional Requirements)
+Dari pemetaan masalah di atas, sistem LUNASIN diwajibkan untuk memiliki fitur fungsional
+dari sisi Admin sebagai berikut:
+1. Sistem Manajemen Hak Akses (Role-Based Access): Sistem wajib
+membedakan tampilan dan fungsi antara Admin (Bendahara) dan User
+(Anggota). Bendahara memiliki kontrol penuh untuk mengedit, menambah, dan
+memvalidasi data, sedangkan anggota hanya diberikan hak akses "hanya lihat"
+(view only) pada laporan.
+2. Validasi Terpusat (Approval System): Anggota memang diharapkan dapat
+mengunggah bukti bayarnya secara mandiri, namun sistem harus memastikan
+setiap bukti tersebut masuk ke dashboard bendahara untuk dilakukan verifikasi
+dan persetujuan (approval) secara sistem sebelum statusnya berubah menjadi
+"Lunas".
+3. Pelacakan Status (Tracking): Ketersediaan dashboard admin yang dapat
+langsung memperlihatkan dan menyortir daftar anggota yang sudah lunas
+maupun yang masih menunggak.
+4. Pengingat Otomatis (Auto-Reminder): Fitur pengingat tunggakan yang
+dikirimkan oleh sistem sangat mendesak diperlukan untuk menggantikan tugas
+"japri" manual bendahara.
+5. Ekspor Laporan Otomatis: Sistem harus memiliki fungsi untuk menghasilkan
+laporan (unduh) setidaknya dalam dua format utama: format PDF (untuk
+dibagikan secara resmi) dan format Excel/Spreadsheet (sebagai arsip database
+yang dapat diolah kembali)
+Berdasarkan hasil riset dan elisitasi kebutuhan yang telah dilakukan kepada 55 responden
+anggota organisasi serta wawancara mendalam dengan pengurus keuangan dari 4 organisasi
+berbeda (HIMSI, IPM Cabang Daerah, IPM Cabang Kota, dan Dewadaru), dapat
+disimpulkan bahwa pengembangan Sistem Informasi Manajemen Kas Organisasi sangat
+relevan dan mendesak untuk direalisasikan.
+Sistem pengelolaan kas yang berjalan saat ini terbukti rentan terhadap human error , risiko
+selisih pencatatan , dan tingginya beban administratif bendahara dalam menagih iuran
+secara manual. Oleh karena itu, Sistem ini dirancang untuk menjembatani kebutuhan kedua
+belah pihak dengan fitur-fitur krusial, meliputi: dashboard riwayat pembayaran mandiri ,
+sistem validasi persetujuan (approval) oleh bendahara , fitur pengingat tunggakan otomatis
+(auto-reminder) , dan kemampuan ekspor laporan keuangan. Selain itu, preferensi
+8
+perangkat pengguna mewajibkan antarmuka sistem dibangun dengan pendekatan MobileFirst.
+Dengan tersusunnya dokumen analisis ini, spesifikasi fungsional dan non-fungsional sistem
+telah tervalidasi secara komprehensif oleh pengguna akhir. Proyek pengembangan
+perangkat lunak ini dinyatakan siap untuk melangkah ke fase perancangan sistem (System
+Design), yang mencakup pembuatan Use Case Diagram, perancangan basis data, dan
+pembuatan purwarupa antarmuka (UI/UX Mockup).
+9
+BAB III
+WORK BREAKDOWN STRUCTURE (WBS)
+Untuk memastikan proses pengembangan Web App LUNASIN berjalan secara terarah dan
+sesuai jadwal, pengerjaan proyek ini dipetakan menggunakan Work Breakdown Structure
+(WBS). Pemetaan ini membagi total ruang lingkup proyek ke dalam enam tahapan kerja utama,
+sehingga setiap fase pengembangan dapat dieksekusi dan dievaluasi secara terukur. Adapun
+rincian tahapan WBS yang diterapkan pada proyek LUNASIN adalah sebagai berikut:
+1. Tahap Analisis Riset Fokus pada pengumpulan data lapangan melalui wawancara
+mendalam dengan bendahara dan penyebaran kuesioner kepada anggota organisasi
+untuk mengidentifikasi kebutuhan fungsional sistem.
+2. Perancangan Sistem Merancang fondasi arsitektur sistem dan menyusun struktur basis
+data (database) yang akan digunakan untuk menyimpan rekam jejak transaksi secara
+terpusat.
+3. Pemodelan Sistem & Antarmuka (UI/UX) Membuat representasi alur logika sistem
+menggunakan Unified Modeling Language (UML) seperti Use Case, Activity, dan
+Sequence Diagram, yang kemudian diturunkan menjadi pemodelan purwarupa
+(prototype) visual antarmuka pengguna (UI/UX) dengan pendekatan mobile-first.
+4. Implementasi (Coding) Tahap eksekusi pengembangan dengan menerjemahkan hasil
+pemodelan UI/UX dan basis data ke dalam baris kode program secara nyata
+menggunakan teknologi front-end dan back-end.
+5. Pengujian (Testing) Melakukan proses validasi aplikasi menggunakan metode Blackbox Testing guna memastikan seluruh fungsionalitas fitur dapat berjalan dengan baik
+dan terbebas dari bug.
+6. Dokumentasi Laporan Menyusun seluruh tahapan siklus pengembangan sistem ke
+dalam bentuk laporan akademik secara lengkap dan terstruktur sebagai bentuk
+pertanggungjawaban proyek.
+Gambar 1. Work Breakdown Strukture
+10
+BAB IV
+PERANCANGAN PEMODELAN SISTEM
+Pemodelan sistem pada aplikasi LUNASIN dilakukan menggunakan Unified Modeling
+Language (UML) untuk menggambarkan alur dan struktur sistem secara jelas sebelum tahap
+implementasi.
+4.1 Use Case Diagram
+Use Case Diagram digunakan untuk memodelkan fungsionalitas sistem dari perspektif
+pengguna (aktor). Pada aplikasi LUNASIN, terdapat dua aktor utama yang berinteraksi dengan
+sistem, yaitu Anggota dan Bendahara. Anggota memiliki akses dasar untuk mengunggah bukti
+pembayaran dan melihat laporan transparansi, sedangkan Bendahara memiliki hak akses
+manajerial menyeluruh seperti memvalidasi pembayaran, mengelola data anggota, serta
+menginput transaksi manual.
+Gambar 1. Use Case Diagram Web App LUNASIN
+4.2 Activity Diagram
+Activity Diagram menggambarkan alur kerja (workflow) atau aktivitas operasional dari
+masing-masing use case yang telah didefinisikan. Diagram ini menunjukkan bagaimana sebuah
+tahapan dimulai, alur keputusan yang mungkin terjadi di dalam sistem, hingga proses tersebut
+selesai. Berikut adalah penjabaran Activity Diagram pada sistem LUNASIN:
+4.2.1 Activity Diagram - Melakukan Login
+Menggambarkan alur pengecekan kredensial (username dan password) beserta
+validasi hak akses untuk menentukan apakah pengguna diarahkan ke dashboard
+Anggota atau Bendahara.
+11
+Gambar 2. Activity Diagram - Melakukan Login
+4.2.2 Activity Diagram - Melihat Dashboard
+Menggambarkan alur sistem dalam merangkum dan menampilkan informasi
+rekapitulasi kas secara ringkas saat pengguna mengakses halaman utama.
+Gambar 3. Activity Diagram - Melihat Dashboard
+12
+4.2.3 Activity Diagram - Mengunggah Bukti Pembayaran
+Menggambarkan tahapan yang dilakukan oleh Anggota dalam memilih periode
+tagihan dan mengunggah foto bukti transfer, serta pengecekan format dan ukuran file
+oleh sistem.
+Gambar 4. Activity Diagram - Mengunggah Bukti Pembayaran
+4.2.4 Activity Diagram - Melihat Laporan Transparansi
+Menggambarkan alur pengguna dalam mengakses data transparansi rekapitulasi
+pengeluaran dan pemasukan kas berupa visualisasi grafik dan tabel.
+13
+Gambar 5. Activity Diagram - Melihat Laporan Transparansi
+4.2.5 Activity Diagram - Mengelola Data Anggota
+Menggambarkan alur aktivitas Bendahara dalam melakukan penambahan atau
+pembaruan basis data anggota, termasuk validasi kelengkapan form oleh sistem.
+Gambar 6. Activity Diagram - Mengelola Data Anggota
+4.2.6 Activity Diagram - Memvalidasi Pembayaran
+Menggambarkan proses Bendahara dalam meninjau bukti pembayaran yang
+diunggah Anggota, lalu memberikan keputusan untuk menerima atau menolak transaksi
+kas tersebut.
+14
+Gambar 7. Activity Diagram - Memvalidasi Pembayaran
+4.2.7 Activity Diagram - Mengelola Transaksi Manual
+Menggambarkan alur kerja Bendahara dalam mencatat transaksi pemasukan kas
+eksternal atau pengeluaran secara manual ke dalam sistem beserta keterangan
+transaksinya.
+Gambar 8. Activity Diagram - Mengelola Transaksi Manual
+15
+4.2.8 Activity Diagram - Mencetak/Mengunduh Laporan
+Menggambarkan alur sistem dalam mengkompilasi data transaksi berdasarkan
+periode waktu yang dipilih Bendahara untuk diunduh dalam format dokumen digital
+(PDF/Excel).
+Gambar 9. Activity Diagram - Mencetak Mengunduh Laporan
+4.3 Sequence Diagram
+Sequence Diagram digunakan untuk merepresentasikan interaksi antar objek di dalam
+sistem yang disusun berdasarkan urutan waktu. Interaksi ini melibatkan tektokan data antara
+Aktor, antarmuka pengguna (Boundary), proses logika (Control), dan basis data (Entity).
+Berikut adalah rancangan Sequence Diagram untuk web app LUNASIN:
+4.3.1 Sequence Diagram - Melakukan Login
+Menggambarkan proses aliran data saat pengguna mencoba masuk ke dalam sistem.
+Pengguna memasukkan username dan password di Halaman Login, yang kemudian
+diteruskan oleh Controller Login untuk divalidasi ke Database. Terdapat blok alternatif
+(ALT): jika data valid, sistem akan mengecek hak akses (Anggota/Bendahara) dan
+mengarahkan ke Dashboard yang sesuai; jika data tidak valid, Controller akan
+mengembalikan pesan error ke layar pengguna.
+Gambar 10. Sequence Diagram - Melakukan Login
+16
+4.3.2 Sequence Diagram - Melihat Dashboard
+Menggambarkan interaksi sistem saat pengguna mengakses halaman utama. Permintaan
+(request) dari Halaman Dashboard diteruskan ke Controller Dashboard, yang kemudian
+menarik data saldo dan riwayat transaksi terakhir dari Database. Setelah data ditemukan,
+sistem menampilkannya dalam bentuk rangkuman informasi dan grafik di layar
+pengguna.
+Gambar 11. Sequence Diagram - Melihat Dashboard
+4.3.3 Sequence Diagram - Mengunggah Bukti Pembayaran
+Menjelaskan proses tektokan data ketika Anggota mengunggah bukti transfer. Controller
+Pembayaran bertugas mengecek ukuran dan format file terlebih dahulu. Pada blok
+alternatif (ALT): jika file valid, data foto disimpan ke Database, status tagihan diubah
+menjadi "Menunggu Validasi", dan muncul notifikasi berhasil. Jika format atau ukuran
+salah, sistem menolak file dan menampilkan pesan error.
+Gambar 12. Sequence Diagram - Mengunggah Bukti Pembayaran
+17
+4.3.4 Sequence Diagram - Melihat Laporan Transparansi
+Memvisualisasikan proses penarikan data rekapitulasi kas. Saat Anggota menekan menu
+Laporan Transparansi, Controller akan me-request data pemasukan dan pengeluaran
+keseluruhan dari Database. Data yang berhasil ditarik kemudian dikonversi oleh sistem
+untuk ditampilkan ke dalam format grafik visual dan tabel pada antarmuka pengguna.
+Gambar 13. Sequence Diagram - Melihat Laporan Transparansi
+4.3.5 Sequence Diagram - Mengelola Data Anggota
+Menggambarkan alur saat Bendahara menambahkan atau memperbarui data anggota.
+Controller Anggota bertugas melakukan validasi kelengkapan form yang diinput.
+Terdapat blok alternatif (ALT): jika form lengkap (valid), data baru disimpan ke
+Database dan notifikasi sukses ditampilkan. Jika ada data yang kosong (invalid), proses
+dihentikan dan sistem meminta Bendahara untuk melengkapi data.
+Gambar 14. Sequence Diagram - Mengelola Data Anggota
+4.3.6 Sequence Diagram - Memvalidasi Pembayaran
+Menjelaskan proses eksekusi keputusan oleh Bendahara terhadap bukti bayar Anggota.
+Controller Validasi memproses status "Terima" atau "Tolak". Pada blok alternatif (ALT):
+jika divalidasi sah (Terima), Database akan memperbarui status tagihan menjadi "Lunas"
+18
+dan menambah total saldo kas. Jika ditolak, status diubah menjadi "Ditolak" tanpa
+mengubah saldo, dan notifikasi dikirimkan ke pengguna terkait.
+Gambar 15. Sequence Diagram - Memvalidasi Pembayaran
+4.3.7 Sequence Diagram - Mengelola Transaksi Manual
+Menggambarkan aliran data saat Bendahara menginput pengeluaran atau pemasukan
+secara manual. Setelah pengisian form, Controller Transaksi melakukan pengecekan
+kelengkapan data. Pada blok alternatif (ALT): jika data valid, sistem menyimpannya ke
+Database, memperbarui saldo kas total, dan menampilkan pesan sukses. Jika data tidak
+lengkap, sistem mengembalikan pesan error.
+Gambar 16. Sequence Diagram - Mengelola Transaksi Manual
+4.3.8 Sequence Diagram - Mencetak/Mengunduh Laporan
+Menjelaskan proses generate file dokumen. Bendahara menginput parameter periode
+(bulan/tahun) dan format file (PDF/Excel). Controller Laporan menarik kumpulan data
+transaksi dari Database sesuai parameter tersebut, lalu memproses (mengkompilasi) data
+menjadi file utuh. Setelah file siap, sistem akan secara otomatis memicu proses
+pengunduhan (download) di browser pengguna.
+19
+Gambar 17. Sequence Diagram - Mencetak Mengunduh Laporan
+20
+BAB V
+IMPLEMENTASI ANTARMUKA (UI/UX)
+5.1 Pendekatan Desain dan Teknologi
+Tahap implementasi antarmuka pengguna (UI/UX) pada sistem LUNASIN difokuskan pada
+penyajian pengalaman pengguna yang intuitif, ringan, dan modern. Berdasarkan hasil riset
+yang menunjukkan bahwa 92,7% pengguna mengakses sistem melalui ponsel pintar,
+perancangan antarmuka dibangun menggunakan pendekatan Mobile-First Design.
+Proses pembuatan purwarupa (prototyping) dilakukan menggunakan perangkat lunak desain
+Figma, yang kemudian diterjemahkan ke dalam baris kode front-end menggunakan framework
+Tailwind CSS. Desain visual mengadopsi gaya Bento Grid dengan dominasi palet warna
+Emerald Green.
+5.2 Implementasi Antarmuka Umum
+Bagian ini merupakan antarmuka awal yang menghubungkan seluruh aktor (Anggota dan
+Bendahara) sebelum memasuki sistem.
+a) Halaman Login (Use Case: Melakukan Login) Antarmuka pintu masuk utama sistem
+yang bersifat universal. Sistem menggunakan Role-Based Access Control (RBAC) di
+belakang layar untuk memvalidasi kredensial pengguna dan mengarahkan mereka ke
+dasbor yang sesuai dengan hak aksesnya (Anggota atau Bendahara).
+Gambar 5.1. Halaman Login LUNASIN 1
+21
+5.3 Implementasi Antarmuka Anggota (Member POV)
+Antarmuka untuk anggota dirancang seminimalis mungkin untuk mengurangi learning curve,
+memfasilitasi kebutuhan utama terkait konfirmasi pembayaran dan transparansi.
+a) Halaman Dasbor & Laporan Transparansi Anggota (Use Case: Melihat
+Dashboard & Melihat Transparasi) Halaman ini merupakan pusat informasi bagi
+anggota, dan sebagai bentuk akuntabilitas, anggota dan bendahara diberikan akses
+untuk melihat rekapitulasi pengeluaran dan pemasukan kas keseluruhan organisasi
+melalui visualisasi data grafik dan tabel yang ringkas.
+Gambar 5.1 Halaman Dasbor & Transparansi
+22
+b) Halaman Unggah Bukti Pembayaran (Use Case: Mengunggah Bukti
+Pembayaran) Halaman ini mengakomodasi alur konfirmasi transaksi, di mana
+anggota dapat memilih periode bulan tagihan dan mengunggah foto bukti transfer
+secara mandiri sebelum divalidasi oleh sistem.
+Gambar 5.3. Halaman Unggah Bukti Pembayan
+23
+5.4 Implementasi Antarmuka Bendahara (Admin POV)
+Antarmuka untuk Bendahara bertindak sebagai Command Center yang memiliki kompleksitas
+lebih tinggi. Arsitektur informasi disusun secara padat agar bendahara dapat mengelola data
+kas dan memvalidasi transaksi dengan cepat.
+a) Halaman Dasbor Bendahara (Use Case: Melihat Dashboard) Menampilkan
+informasi manajerial secara komprehensif, meliputi total saldo kas, ringkasan arus kas
+bulan berjalan, serta metrik kepatuhan anggota (jumlah lunas dan menunggak).
+Gambar 5.5. Halaman Dasbor Bendahara
+24
+b) Halaman Validasi Pembayaran (Use Case: Memvalidasi Pembayaran) Halaman
+krusial yang menampilkan antrean bukti transfer dari anggota. Bendahara dapat
+meninjau foto bukti secara detail dan melakukan aksi "Terima/Approve" atau "Tolak"
+untuk memperbarui status tagihan dan saldo kas.
+Gambar 5.6. Halaman Validasi Pembayaran
+25
+c) Halaman Kelola Transaksi Manual (Use Case: Mengelola Transaksi Manual)
+Fasilitas bagi bendahara untuk mencatat transaksi pemasukan eksternal atau
+pengeluaran operasional (seperti pembelian konsumsi atau alat tulis) secara manual ke
+dalam sistem. (Catatan: Di desain kita, fitur ini jadi satu widget di Dashboard, lu bisa
+potong screenshot khusus bagian tombol Catat Pemasukan/Pengeluaran).
+Gambar 5.7. Antarmuka Pencatatan Transaki
+26
+d) Halaman Manajemen Anggota (Use Case: Mengelola Data Anggota) Menyajikan
+daftar lengkap anggota untuk memantau status pembayaran. Antarmuka ini dilengkapi
+dengan fitur pencarian, penambahan data anggota baru, serta visualisasi indikator
+warna untuk mengidentifikasi anggota yang menunggak kas.
+Gambar 5.8. Halaman Manajemen Anggota
+27
+e) Halaman Unduh Laporan Keuangan (Use Case: Mencetak/Mengunduh Laporan)
+Fasilitas bagi bendahara untuk mengkompilasi data transaksi berdasarkan periode
+waktu tertentu (bulan/tahun). Sistem menyediakan opsi ekspor dokumen ke dalam
+format digital (PDF/Excel) untuk keperluan laporan pertanggungjawaban.
+Gambar 5.9. Halaman Unduh Laporan Keuangan
